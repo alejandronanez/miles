@@ -1,6 +1,8 @@
 let updateInput = (updaterFunction, event) =>
   updaterFunction(ReactEvent.Form.target(event)##value);
 
+let handleButtonClick = _event => Js.log("clicked");
+
 [@react.component]
 let make = () => {
   let (origin, setOrigin) = React.useState(() => "");
@@ -19,5 +21,6 @@ let make = () => {
       label="Destination"
       name="destination"
     />
+    <Button onClick=handleButtonClick />
   </div>;
 };
