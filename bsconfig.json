@@ -15,6 +15,6 @@
   ],
   "suffix": ".bs.js",
   "namespace": true,
-  "bs-dependencies": ["reason-react", "bs-leaflet"],
+  "bs-dependencies": ["reason-react", "bs-leaflet", "@glennsl/bs-json"],
   "refmt": 3
 }
