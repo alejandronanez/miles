@@ -1,5 +1,5 @@
 let updateInput = (updaterFunction, event) =>
-  updaterFunction(ReactEvent.Form.target(event)##value);
+  ReactEvent.Form.target(event)##value->updaterFunction;
 let handleButtonClick = _event => Js.log("clicked");
 
 [@react.component]
@@ -19,7 +19,8 @@ let make = () => {
          Js.Promise.resolve();
        })
     |> ignore;
-    Some(() => ());
+
+    None;
   });
 
   <div>
