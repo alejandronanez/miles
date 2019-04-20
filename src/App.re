@@ -11,12 +11,7 @@ let make = () => {
   React.useEffect0(() => {
     Data.fetchAirports()
     |> Js.Promise.then_(airportData => {
-         /**
-         Had to destructure the tuple b/c we're getting a tuple from the resolver
-         instead of the plain result
-         */
-         let (_func, airportDataFromServer) = airportData;
-         setAirports(_prevState => Some(airportDataFromServer));
+         setAirports(_prevState => Some(airportData));
          Js.Promise.resolve();
        })
     |> Js.Promise.catch(err => {
