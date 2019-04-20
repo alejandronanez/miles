@@ -2,30 +2,30 @@ let updateInput = (updaterFunction, event) =>
   updaterFunction(ReactEvent.Form.target(event)##value);
 let handleButtonClick = _event => Js.log("clicked");
 
-// Helpers
-let getMilesBetweenPoints = (~pointA, ~pointB) =>
-  LeafletRe.LatLng.distanceTo(pointA, pointB) /. 1609.344;
-
-// Dummy data
-let bogota =
-  LeafletRe.create_lat_lng(
-    ~latitude=4.70159,
-    ~longitude=-74.1469,
-    ~altitude=Some(0.0),
-  );
-let miami =
-  LeafletRe.create_lat_lng(
-    ~latitude=25.79319953918457,
-    ~longitude=-80.29060363769531,
-    ~altitude=Some(0.0),
-  );
-
-Js.log(getMilesBetweenPoints(~pointA=bogota, ~pointB=miami));
-
 [@react.component]
 let make = () => {
   let (origin, setOrigin) = React.useState(() => "");
+  let (_airports, setAirports) = React.useState(() => None);
   let (destination, setDestination) = React.useState(() => "");
+
+  React.useEffect0(() => {
+    Data.fetchAirports()
+    |> Js.Promise.then_(airportData => {
+         /**
+         Had to destructure the tuple b/c we're getting a tuple from the resolver
+         instead of the plain result
+         */
+         let (_func, airportDataFromServer) = airportData;
+         setAirports(_prevState => Some(airportDataFromServer));
+         Js.Promise.resolve();
+       })
+    |> Js.Promise.catch(err => {
+         Js.log("An error occurred: " ++ Js.String.make(err));
+         Js.Promise.resolve();
+       })
+    |> ignore;
+    Some(() => ());
+  });
 
   <div>
     <Input
